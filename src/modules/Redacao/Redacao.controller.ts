@@ -30,8 +30,10 @@ export class RedacaoController {
     }
 
     async correct(id: string, conteudo: string) {
-        
-        this.redacaoService.toCorrect(id, conteudo);
+
+        this.redacaoService.toCorrect(id, conteudo).catch((err) => {
+            console.error(`[RedacaoController] Erro ao corrigir redação ${id}:`, err.message);
+        });
 
         return this.paymentService.create({
             redacoes_id: id,

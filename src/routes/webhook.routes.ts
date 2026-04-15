@@ -12,7 +12,7 @@ export default async function (app: FastifyInstance) {
   });
 
   app.post("/pix", async (request, reply) => {
-    reply.header('x-skip-mtls-checking', 'true');
+    reply.header("x-skip-mtls-checking", "true");
     console.log("=== WEBHOOK RECEIVE EVENT ===");
     console.log("Headers:", request.headers);
     console.log("Body:", JSON.stringify(request.body, null, 2));
