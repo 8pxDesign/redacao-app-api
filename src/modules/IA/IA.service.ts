@@ -18,25 +18,26 @@ export class IAService {
     try {
       const bodyData: ChatCompletionRequest = {
         messages,
-        model: this.isDeepSeek() ? `deepseek-chat` : `gpt-4o-mini-2024-07-18`,
+        model: this.isDeepSeek() ? `deepseek-chat` : `gpt-4o-mini`,
         response_format: { type: `json_object` },
         temperature: 0.5,
       };
 
-      const responseRequest = await fetch(
-        `${this.rootApiUrl}v1/chat/completions`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${env[`IA_${this.actualApi}_TOKEN`]}`,
-          },
-          body: JSON.stringify(bodyData),
+      const url = `${this.rootApiUrl}chat/completions`;
+      console.log(`[IAService] Chamando ${this.actualApi}: ${url}`);
+
+      const responseRequest = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env[`IA_${this.actualApi}_TOKEN`]}`,
         },
-      );
+        body: JSON.stringify(bodyData),
+      });
 
       if (!responseRequest.ok) {
         const errorResponse = await responseRequest.text();
+        console.error(`[IAService] Erro ${responseRequest.status} (${this.actualApi}):`, errorResponse);
         throw new Error(
           `Erro HTTP ${responseRequest.status}: ${errorResponse}`,
         );

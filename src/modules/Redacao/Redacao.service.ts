@@ -43,8 +43,9 @@ export class RedacaoService {
 - Faça vários pontos de atenção, e seja bem descritivo nelas
 - **Destaque as falhas e os problemas**, explicando com exemplos onde a redação pode melhorar e fornecendo instruções claras sobre como corrigir os erros.
 - **Use um tom claro, objetivo e instrutivo.** A ideia é que a correção sirva como um guia para que o autor compreenda exatamente o que precisa ser aprimorado.
-- **Garanta que cada aspecto seja avaliado com profundidade, sem economizar palavras ou explicações.** Quanto mais detalhado for o feedback, mais útil será para o candidato. 
-Formato JSON: {\"comentario\":\"\",\"items_criterios_avaliacao\":[{\"id\":\"\",\"nota\":001}],\"items_atencao\":[{\"nome\":\"\",\"descricao\":\"\",\"como_melhorar\":\"\"}]}`;
+- **Garanta que cada aspecto seja avaliado com profundidade, sem economizar palavras ou explicações.** Quanto mais detalhado for o feedback, mais útil será para o candidato.
+- **IMPORTANTE:** No campo \"id\" de cada item em \"items_criterios_avaliacao\", você DEVE usar exatamente o UUID do campo \"id\" presente em \"items_criterios_avaliacao\" do JSON recebido. NÃO invente IDs. NÃO use valores como \"C1\", \"C2\" ou qualquer outro valor que não seja o UUID original fornecido no JSON de entrada.
+Formato JSON: {\"comentario\":\"\",\"items_criterios_avaliacao\":[{\"id\":\"uuid-exato-do-item-criterio-recebido-no-json\",\"nota\":001}],\"items_atencao\":[{\"nome\":\"\",\"descricao\":\"\",\"como_melhorar\":\"\"}]}`;
     constructor() {
         this.redacaoRepository = new DbRedacaoRepository();
         this.criterioAvaliacaoService = new CriteriosAvaliacaoService();
