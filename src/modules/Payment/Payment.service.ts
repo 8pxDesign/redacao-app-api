@@ -15,23 +15,22 @@ export class PaymentService {
   async create(payment: Partial<IPayment>) {
     try {
       const efiPay = new EfiPay(efiCrendentials);
+
+      if (env.WEBHOOK_URL) {
+        await efiPay.pixConfigWebhook(
+          { chave: env.EFI_PIX_KEY },
+          { webhookUrl: env.WEBHOOK_URL },
+        );
+      }
+
       const paymentEfiData = await efiPay.pixCreateImmediateCharge(
         {},
         {
-          calendario: {
-            expiracao: 3600,
-          },
-          valor: {
-            original: "2.99",
-          },
-          chave: "e4e80616-13d6-4e08-bcd5-a6059f52d443",
+          calendario: { expiracao: 3600 },
+          valor: { original: "2.99" },
+          chave: env.EFI_PIX_KEY,
           solicitacaoPagador: "Redação Avulsa",
-        }
-      );
-
-      await efiPay.pixConfigWebhook(
-        { chave: "e4e80616-13d6-4e08-bcd5-a6059f52d443" },
-        { webhookUrl: 'https://redacao-app-0eee4f588161.herokuapp.com/webhook/pix?ignorar=' }
+        },
       );
 
       const paymentCreated = await this.paymentRepository.create({
