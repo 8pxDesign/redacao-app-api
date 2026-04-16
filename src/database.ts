@@ -10,7 +10,9 @@ export const config: Knex.Config = {
         port: env.DATABASE_PORT,
         user: env.DATABASE_USER,
         password: env.DATABASE_PASSWORD,
-        database: env.DATABASE_NAME
+        database: env.DATABASE_NAME,
+        options: `--client_encoding=UTF8`,
+        family: 4,
     },
     migrations: {
         extension: 'ts',
