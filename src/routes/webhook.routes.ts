@@ -11,6 +11,10 @@ export default async function (app: FastifyInstance) {
     });
   });
 
+  app.post("/", async (request, reply) => {
+    return reply.status(200).send({ success: true });
+  });
+
   app.post("/pix", async (request, reply) => {
     reply.header("x-skip-mtls-checking", "true");
     console.log("=== WEBHOOK RECEIVE EVENT ===");
